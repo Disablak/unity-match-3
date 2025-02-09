@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using static Unity.Mathematics.math;
 
 
 public class Match3Game : MonoBehaviour
@@ -16,12 +17,16 @@ public class Match3Game : MonoBehaviour
 	public int2 Size => _size;
 	public bool HasMatches => _matches.Count > 0;
 
+	public List<int2> ClearedTileCoordinates{get; private set;}
+	public bool NeedsFilling {get; private set;}
+
 	public void StartNewGame()
 	{
 		if (_grid.IsUndefined)
 		{
 			_grid = new Grid2D<TileState>(_size);
 			_matches = new List<Match>();
+			ClearedTileCoordinates = new List<int2>();
 		}
 
 		FillGrid();
@@ -35,6 +40,29 @@ public class Match3Game : MonoBehaviour
 
 		_grid.Swap(move.From, move.To);
 		return false;
+	}
+
+	public void ProcessMatches()
+	{
+		ClearedTileCoordinates.Clear();
+
+		for (int m = 0; m < _matches.Count; m++)
+		{
+			Match match = _matches[m];
+			int2 step = match.isHorizontal ? int2(1, 0) : int2(0, 1);
+			int2 c = match.coordinates;
+			for (int i = 0; i < match.length; c += step, i++)
+			{
+				if (_grid[c] != TileState.None)
+				{
+					_grid[c] = TileState.None;
+					ClearedTileCoordinates.Add(c);
+				}
+			}
+		}
+
+		_matches.Clear();
+		NeedsFilling = true;
 	}
 
 	private bool FindMatches()

@@ -86,6 +86,23 @@ public class Match3Skin : MonoBehaviour
 
 			_tiles.Swap(move.From, move.To);
 		}
+
+		if (_game.HasMatches)
+		{
+			ProcessMatches();
+		}
+	}
+
+	private void ProcessMatches()
+	{
+		_game.ProcessMatches();
+
+		for (int i = 0; i < _game.ClearedTileCoordinates.Count; i++)
+		{
+			int2 c = _game.ClearedTileCoordinates[i];
+			_tiles[c].Despawn();
+			_tiles[c] = null;
+		}
 	}
 
 	private float2 ScreenToTileSpace(Vector3 screenPosition)
