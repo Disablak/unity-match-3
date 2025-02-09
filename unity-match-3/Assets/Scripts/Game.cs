@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 
@@ -9,6 +10,7 @@ public class Game : MonoBehaviour
 
 	private Vector2 _dragStart;
 	private bool _isDragging;
+
 
 	private void Awake()
 	{
@@ -48,4 +50,9 @@ public class Game : MonoBehaviour
 			_isDragging = false;
 		}
 	}
+}
+
+public enum MoveDirection
+{
+	None, Up, Right, Down, Left
 }
