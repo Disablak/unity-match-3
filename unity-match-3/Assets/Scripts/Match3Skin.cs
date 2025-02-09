@@ -91,6 +91,32 @@ public class Match3Skin : MonoBehaviour
 		{
 			ProcessMatches();
 		}
+
+		if (_game.NeedsFilling)
+		{
+			DropTiles();
+		}
+	}
+
+	private void DropTiles()
+	{
+		_game.DropTiles();
+
+		for (int i = 0; i < _game.DroppedTiles.Count; i++)
+		{
+			TileDrop drop = _game.DroppedTiles[i];
+			Tile tile;
+			if (drop.fromY < _tiles.SizeY)
+			{
+				tile = _tiles[drop.coordinates.x, drop.fromY];
+				tile.transform.localPosition = new Vector3(drop.coordinates.x + _tileOffset.x, drop.coordinates.y + _tileOffset.y);
+			}else
+			{
+				tile = SpawnTile(_game[drop.coordinates], drop.coordinates.x, drop.coordinates.y);
+			}
+
+			_tiles[drop.coordinates] = tile;
+		}
 	}
 
 	private void ProcessMatches()

@@ -19,6 +19,7 @@ public class Match3Game : MonoBehaviour
 
 	public List<int2> ClearedTileCoordinates{get; private set;}
 	public bool NeedsFilling {get; private set;}
+	public List<TileDrop> DroppedTiles {get; private set;}
 
 	public void StartNewGame()
 	{
@@ -27,6 +28,7 @@ public class Match3Game : MonoBehaviour
 			_grid = new Grid2D<TileState>(_size);
 			_matches = new List<Match>();
 			ClearedTileCoordinates = new List<int2>();
+			DroppedTiles = new List<TileDrop>();
 		}
 
 		FillGrid();
@@ -63,6 +65,37 @@ public class Match3Game : MonoBehaviour
 
 		_matches.Clear();
 		NeedsFilling = true;
+	}
+
+	public void DropTiles()
+	{
+		DroppedTiles.Clear();
+
+		for (int x = 0; x < _size.x; x++)
+		{
+			int holeCount = 0;
+			for (int y = 0; y < _size.y; y++)
+			{
+				if (_grid[x, y] == TileState.None)
+				{
+					holeCount++;
+				}
+				else if (holeCount > 0)
+				{
+					_grid[x, y - holeCount] = _grid[x, y];
+					DroppedTiles.Add(new TileDrop(x, y - holeCount, holeCount));
+				}
+			}
+
+			for (int h = 1; h <= holeCount; h++)
+			{
+				_grid[x, _size.y - h] = (TileState)Random.Range(1, 8);
+				DroppedTiles.Add(new TileDrop(x, _size.y - h, holeCount));
+			}
+		}
+
+		NeedsFilling = false;
+		FindMatches();
 	}
 
 	private bool FindMatches()
