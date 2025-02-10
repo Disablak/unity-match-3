@@ -14,7 +14,20 @@ public class Match3Skin : MonoBehaviour
 
 	public bool IsPlaying => true;
 	public bool IsBusy => false;
-	public void DoWork() {}
+
+
+	public void DoWork()
+	{
+		if (_game.HasMatches)
+		{
+			ProcessMatches();
+		}
+		else
+		if (_game.NeedsFilling)
+		{
+			DropTiles();
+		}
+	}
 
 	public void StartNewGame()
 	{
@@ -87,15 +100,7 @@ public class Match3Skin : MonoBehaviour
 			_tiles.Swap(move.From, move.To);
 		}
 
-		if (_game.HasMatches)
-		{
-			ProcessMatches();
-		}
 
-		if (_game.NeedsFilling)
-		{
-			DropTiles();
-		}
 	}
 
 	private void DropTiles()
