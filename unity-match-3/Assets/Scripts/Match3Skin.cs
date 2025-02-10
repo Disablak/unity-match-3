@@ -8,16 +8,27 @@ public class Match3Skin : MonoBehaviour
 	[SerializeField] private Tile[] _tilePrefabs;
 	[SerializeField] private Match3Game _game;
 	[SerializeField] private float _dragThreshold = 0.5f;
+	[SerializeField] private TileSwapper _tileSwapper;
 
 	private Grid2D<Tile> _tiles;
 	private float2 _tileOffset;
+	private float _busyDuration;
 
 	public bool IsPlaying => true;
-	public bool IsBusy => false;
+	public bool IsBusy => _busyDuration > 0.0f;
 
 
 	public void DoWork()
 	{
+		if (IsBusy)
+		{
+			_tileSwapper.Update();
+			_busyDuration -= Time.deltaTime;
+			if (IsBusy)
+				return;
+		}
+
+
 		if (_game.HasMatches)
 		{
 			ProcessMatches();
@@ -31,6 +42,8 @@ public class Match3Skin : MonoBehaviour
 
 	public void StartNewGame()
 	{
+		_busyDuration = 0.0f;
+
 		_game.StartNewGame();
 		_tileOffset = -0.5f * (float2)_game.Size;
 
@@ -92,15 +105,22 @@ public class Match3Skin : MonoBehaviour
 
 	private void DoMove(Move move)
 	{
-		if (_game.TryMove(move))
+		bool success = _game.TryMove(move);
+		Tile a = _tiles[move.From];
+		Tile b = _tiles[move.To];
+		_busyDuration = _tileSwapper.Swap(a, b, !success);
+		if (success)
 		{
-			(_tiles[move.From].transform.localPosition, _tiles[move.To].transform.localPosition) =
-				(_tiles[move.To].transform.localPosition, _tiles[move.From].transform.localPosition);
-
-			_tiles.Swap(move.From, move.To);
+			_tiles[move.From] = b;
+			_tiles[move.To] = a;
 		}
-
-
+		// if ()
+		// {
+		// 	(_tiles[move.From].transform.localPosition, _tiles[move.To].transform.localPosition) =
+		// 		(_tiles[move.To].transform.localPosition, _tiles[move.From].transform.localPosition);
+		//
+		// 	_tiles.Swap(move.From, move.To);
+		// }
 	}
 
 	private void DropTiles()
