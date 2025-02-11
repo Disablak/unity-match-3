@@ -11,6 +11,7 @@ public class Match3Game : MonoBehaviour
 
 	private List<Match> _matches;
 	private Grid2D<TileState> _grid;
+	private int _scoreMultiplayer;
 
 	public TileState this[int x, int y] => _grid[x, y];
 	public TileState this[int2 c] => _grid[c];
@@ -20,6 +21,8 @@ public class Match3Game : MonoBehaviour
 	public List<int2> ClearedTileCoordinates{get; private set;}
 	public bool NeedsFilling {get; private set;}
 	public List<TileDrop> DroppedTiles {get; private set;}
+	public int TotalScore {get; private set;}
+	public List<SingleScore> Scores {get; private set;}
 
 	public void StartNewGame()
 	{
@@ -29,6 +32,8 @@ public class Match3Game : MonoBehaviour
 			_matches = new List<Match>();
 			ClearedTileCoordinates = new List<int2>();
 			DroppedTiles = new List<TileDrop>();
+			TotalScore = 0;
+			Scores = new List<SingleScore>();
 		}
 
 		FillGrid();
@@ -36,6 +41,7 @@ public class Match3Game : MonoBehaviour
 
 	public bool TryMove(Move move)
 	{
+		_scoreMultiplayer = 1;
 		_grid.Swap(move.From, move.To);
 		if (FindMatches())
 			return true;
@@ -47,6 +53,7 @@ public class Match3Game : MonoBehaviour
 	public void ProcessMatches()
 	{
 		ClearedTileCoordinates.Clear();
+		Scores.Clear();
 
 		for (int m = 0; m < _matches.Count; m++)
 		{
@@ -61,6 +68,13 @@ public class Match3Game : MonoBehaviour
 					ClearedTileCoordinates.Add(c);
 				}
 			}
+			var score = new SingleScore()
+			{
+				position = match.coordinates + (float2)step * (match.length - 1) * 0.5f,
+				value = match.length * _scoreMultiplayer++
+			};
+			Scores.Add(score);
+			TotalScore += score.value;
 		}
 
 		_matches.Clear();

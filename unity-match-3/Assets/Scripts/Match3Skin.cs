@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using static Unity.Mathematics.math;
@@ -9,6 +10,8 @@ public class Match3Skin : MonoBehaviour
 	[SerializeField] private Match3Game _game;
 	[SerializeField] private float _dragThreshold = 0.5f;
 	[SerializeField] private TileSwapper _tileSwapper;
+	[SerializeField] private TMP_Text _textTotalScore;
+	[SerializeField] private FloatingScore _floatingScorePrefab;
 
 	[SerializeField, Range(0.1f, 20f)]
 	private float _dropSpeed = 8f;
@@ -19,6 +22,7 @@ public class Match3Skin : MonoBehaviour
 	private Grid2D<Tile> _tiles;
 	private float2 _tileOffset;
 	private float _busyDuration;
+	private float _floatingScoreZ;
 
 	public bool IsPlaying => true;
 	public bool IsBusy => _busyDuration > 0.0f;
@@ -49,7 +53,7 @@ public class Match3Skin : MonoBehaviour
 	public void StartNewGame()
 	{
 		_busyDuration = 0.0f;
-
+		_textTotalScore.text = "0";
 		_game.StartNewGame();
 		_tileOffset = -0.5f * (float2)_game.Size;
 
@@ -152,6 +156,15 @@ public class Match3Skin : MonoBehaviour
 			int2 c = _game.ClearedTileCoordinates[i];
 			_busyDuration = Mathf.Max(_tiles[c].Disappear(), _busyDuration);
 			_tiles[c] = null;
+		}
+
+		_textTotalScore.SetText("{0}", _game.TotalScore);
+
+		for (int i = 0; i < _game.Scores.Count; i++)
+		{
+			SingleScore score = _game.Scores[i];
+			_floatingScorePrefab.Show(new Vector3(score.position.x + _tileOffset.x, score.position.y + _tileOffset.y, _floatingScoreZ), score.value);
+			_floatingScoreZ = _floatingScoreZ <= -0.02f ? 0f : _floatingScoreZ - 0.001f;
 		}
 	}
 
