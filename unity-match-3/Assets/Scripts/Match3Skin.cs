@@ -114,13 +114,6 @@ public class Match3Skin : MonoBehaviour
 			_tiles[move.From] = b;
 			_tiles[move.To] = a;
 		}
-		// if ()
-		// {
-		// 	(_tiles[move.From].transform.localPosition, _tiles[move.To].transform.localPosition) =
-		// 		(_tiles[move.To].transform.localPosition, _tiles[move.From].transform.localPosition);
-		//
-		// 	_tiles.Swap(move.From, move.To);
-		// }
 	}
 
 	private void DropTiles()
@@ -151,7 +144,7 @@ public class Match3Skin : MonoBehaviour
 		for (int i = 0; i < _game.ClearedTileCoordinates.Count; i++)
 		{
 			int2 c = _game.ClearedTileCoordinates[i];
-			_tiles[c].Despawn();
+			_busyDuration = Mathf.Max(_tiles[c].Disappear(), _busyDuration);
 			_tiles[c] = null;
 		}
 	}
