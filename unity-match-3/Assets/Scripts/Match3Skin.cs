@@ -11,6 +11,7 @@ public class Match3Skin : MonoBehaviour
 	[SerializeField] private float _dragThreshold = 0.5f;
 	[SerializeField] private TileSwapper _tileSwapper;
 	[SerializeField] private TMP_Text _textTotalScore;
+	[SerializeField] private TMP_Text _textGameOver;
 	[SerializeField] private FloatingScore _floatingScorePrefab;
 
 	[SerializeField, Range(0.1f, 20f)]
@@ -24,7 +25,7 @@ public class Match3Skin : MonoBehaviour
 	private float _busyDuration;
 	private float _floatingScoreZ;
 
-	public bool IsPlaying => true;
+	public bool IsPlaying => IsBusy || _game.PossibleMove.IsValid;
 	public bool IsBusy => _busyDuration > 0.0f;
 
 
@@ -38,7 +39,6 @@ public class Match3Skin : MonoBehaviour
 				return;
 		}
 
-
 		if (_game.HasMatches)
 		{
 			ProcessMatches();
@@ -48,12 +48,18 @@ public class Match3Skin : MonoBehaviour
 		{
 			DropTiles();
 		}
+		else
+		if (!IsPlaying)
+		{
+			_textGameOver.gameObject.SetActive(true);
+		}
 	}
 
 	public void StartNewGame()
 	{
 		_busyDuration = 0.0f;
 		_textTotalScore.text = "0";
+		_textGameOver.gameObject.SetActive(false);
 		_game.StartNewGame();
 		_tileOffset = -0.5f * (float2)_game.Size;
 
@@ -81,6 +87,11 @@ public class Match3Skin : MonoBehaviour
 				_tiles[x, y] = SpawnTile(_game[x, y], x, y);
 			}
 		}
+	}
+
+	public void DoAutoMove()
+	{
+		DoMove(_game.PossibleMove);
 	}
 
 	private Tile SpawnTile(TileState tileState, int x, int y)

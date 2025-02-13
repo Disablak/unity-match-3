@@ -8,6 +8,9 @@ public class Game : MonoBehaviour
 	[SerializeField]
 	private Match3Skin _match3;
 
+	[SerializeField]
+	private bool _autoGame;
+
 	private Vector2 _dragStart;
 	private bool _isDragging;
 
@@ -36,7 +39,11 @@ public class Game : MonoBehaviour
 
 	private void HandleInput()
 	{
-		if (_isDragging == false && Input.GetMouseButtonDown(0))
+		if (_autoGame)
+		{
+			_match3.DoAutoMove();
+		}
+		else if (_isDragging == false && Input.GetMouseButtonDown(0))
 		{
 			_dragStart = Input.mousePosition;
 			_isDragging = true;

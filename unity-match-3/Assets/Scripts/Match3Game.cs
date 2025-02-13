@@ -23,20 +23,27 @@ public class Match3Game : MonoBehaviour
 	public List<TileDrop> DroppedTiles {get; private set;}
 	public int TotalScore {get; private set;}
 	public List<SingleScore> Scores {get; private set;}
+	public Move PossibleMove {get; private set;}
 
 	public void StartNewGame()
 	{
+		TotalScore = 0;
+
 		if (_grid.IsUndefined)
 		{
 			_grid = new Grid2D<TileState>(_size);
 			_matches = new List<Match>();
 			ClearedTileCoordinates = new List<int2>();
 			DroppedTiles = new List<TileDrop>();
-			TotalScore = 0;
 			Scores = new List<SingleScore>();
 		}
 
-		FillGrid();
+		do
+		{
+			FillGrid();
+			PossibleMove = Move.FindMove(this);
+		}
+		while (!PossibleMove.IsValid);
 	}
 
 	public bool TryMove(Move move)
@@ -109,7 +116,9 @@ public class Match3Game : MonoBehaviour
 		}
 
 		NeedsFilling = false;
-		FindMatches();
+
+		if (!FindMatches())
+			PossibleMove = Move.FindMove(this);
 	}
 
 	private bool FindMatches()
