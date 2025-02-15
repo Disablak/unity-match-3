@@ -1,12 +1,13 @@
 using Unity.Mathematics;
+using UnityEngine;
+
 
 [System.Serializable]
 public struct Grid2D<T>
 {
 	T[] _cells;
-	int2 _size;
+	Vector2Int _size;
 
-	public int2 Size => _size;
 	public int SizeX => _size.x;
 	public int SizeY => _size.y;
 	public bool IsUndefined => _cells == null || _cells.Length == 0;
@@ -33,7 +34,7 @@ public struct Grid2D<T>
 		(this[a], this[b]) = (this[b], this[a]);
 	}
 
-	public Grid2D(int2 size)
+	public Grid2D(Vector2Int size)
 	{
 		_size = size;
 		_cells = new T[size.x * size.y];

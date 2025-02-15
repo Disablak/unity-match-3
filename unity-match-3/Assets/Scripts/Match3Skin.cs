@@ -61,7 +61,7 @@ public class Match3Skin : MonoBehaviour
 		_textTotalScore.text = "0";
 		_textGameOver.gameObject.SetActive(false);
 		_game.StartNewGame();
-		_tileOffset = -0.5f * (float2)_game.Size;
+		_tileOffset = -0.5f * (Vector2)_game.Size;
 
 		if (_tiles.IsUndefined)
 		{

@@ -1,4 +1,5 @@
 using Unity.Mathematics;
+using UnityEngine;
 using static Unity.Mathematics.math;
 
 [System.Serializable]
@@ -26,7 +27,7 @@ public struct Move
 
 	public static Move FindMove(Match3Game game)
 	{
-		int2 size = game.Size;
+		Vector2 size = game.Size;
 		for (int2 c = 0; c.y < size.y; c.y++)
 		{
 			for (c.x = 0; c.x < size.x; c.x++)

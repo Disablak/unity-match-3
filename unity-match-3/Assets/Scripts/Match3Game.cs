@@ -7,7 +7,7 @@ using static Unity.Mathematics.math;
 
 public class Match3Game : MonoBehaviour
 {
-	[SerializeField] private int2 _size = 8;
+	[SerializeField] private Vector2Int _size = new Vector2Int(8, 8);
 
 	private List<Match> _matches;
 	private Grid2D<TileState> _grid;
@@ -15,7 +15,7 @@ public class Match3Game : MonoBehaviour
 
 	public TileState this[int x, int y] => _grid[x, y];
 	public TileState this[int2 c] => _grid[c];
-	public int2 Size => _size;
+	public Vector2Int Size => _size;
 	public bool HasMatches => _matches.Count > 0;
 
 	public List<int2> ClearedTileCoordinates{get; private set;}
