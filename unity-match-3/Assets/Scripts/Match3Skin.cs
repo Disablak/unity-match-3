@@ -6,6 +6,7 @@ using static Unity.Mathematics.math;
 
 public class Match3Skin : MonoBehaviour
 {
+	[SerializeField] private Tile[] _tilePrefabs;
 	[SerializeField] private Tile _tilePrefab;
 	[SerializeField] private Match3Game _game;
 	[SerializeField] private float _dragThreshold = 0.5f;
@@ -99,7 +100,7 @@ public class Match3Skin : MonoBehaviour
 		return _tilePrefab.Spawn(new Vector3(x + _tileOffset.x, y + _tileOffset.y), tileState);
 	}
 
-	public bool EvalueteDrag(Vector3 start, Vector3 end)
+	public bool EvaluateDrag(Vector3 start, Vector3 end)
 	{
 		float2 a = ScreenToTileSpace(start);
 		float2 b = ScreenToTileSpace(end);
@@ -150,7 +151,7 @@ public class Match3Skin : MonoBehaviour
 				tile = _tiles[drop.coordinates.x, drop.fromY];
 			}else
 			{
-				tile = SpawnTile(_game[drop.coordinates], drop.coordinates.x, drop.coordinates.y);
+				tile = SpawnTile(_game[drop.coordinates], drop.coordinates.x, drop.fromY + (int)_newDropOffset);
 			}
 
 			_tiles[drop.coordinates] = tile;
@@ -183,6 +184,6 @@ public class Match3Skin : MonoBehaviour
 	{
 		Ray ray = Camera.main.ScreenPointToRay(screenPosition);
 		Vector3 p = ray.origin - ray.direction * (ray.origin.z / ray.direction.z);
-		return float2(p.x - _tileOffset.x + 0.5f, p.y - _tileOffset.y + 0.5f);
+		return float2(p.x - _tileOffset.x, p.y - _tileOffset.y);
 	}
 }

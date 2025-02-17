@@ -14,6 +14,7 @@ public class Tile : MonoBehaviour
 	private IObjectPool<Tile> _pool;
 	private float _disappearProgress;
 	private FallingState _fallingState;
+	private readonly Vector3 DEFAULT_LOCAL_SCALE = Vector3.one * 0.4f;
 
 	public Tile Spawn(Vector3 pos, TileState state)
 	{
@@ -25,7 +26,7 @@ public class Tile : MonoBehaviour
 		instance.sprRenderer.sprite = sprTiles[(int)state - 1];
 		instance._pool = _pool;
 		instance.transform.localPosition = pos;
-		instance.transform.localScale = Vector3.one;
+		instance.sprRenderer.transform.localScale = DEFAULT_LOCAL_SCALE;
 		instance._disappearProgress = -1f;
 		instance._fallingState.progress = -1f;
 		instance.enabled = false;
@@ -64,7 +65,7 @@ public class Tile : MonoBehaviour
 				Despawn();
 				return;
 			}
-			transform.localScale = Vector3.one * (1f - _disappearProgress / disappearDuration);
+			sprRenderer.transform.localScale = DEFAULT_LOCAL_SCALE * (1f - _disappearProgress / disappearDuration);
 		}
 
 		if (_fallingState.progress >= 0f)

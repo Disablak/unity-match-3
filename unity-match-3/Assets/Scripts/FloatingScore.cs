@@ -28,7 +28,7 @@ public class FloatingScore : MonoBehaviour
 		FloatingScore instance = _pool.Get();
 		instance._pool = _pool;
 		instance.displayText.SetText("{0}", value);
-		instance.transform.localPosition = pos;
+		instance.transform.localPosition = pos + new Vector3(0.5f, 0.5f);
 		instance._age = 0f;
 	}
 

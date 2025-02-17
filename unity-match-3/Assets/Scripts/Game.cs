@@ -50,7 +50,7 @@ public class Game : MonoBehaviour
 		}
 		else if (_isDragging && Input.GetMouseButton(0))
 		{
-			_isDragging = _match3.EvalueteDrag(_dragStart, Input.mousePosition);
+			_isDragging = _match3.EvaluateDrag(_dragStart, Input.mousePosition);
 		}
 		else
 		{
