@@ -517,6 +517,7 @@ MonoBehaviour:
   - {fileID: 1563619205082888553, guid: ace4d8943f48e476484643cb78f6a6db, type: 3}
   - {fileID: 1563619205082888553, guid: 32b372d0e0f0948c493880359f6e1c59, type: 3}
   - {fileID: 1563619205082888553, guid: a183495d28d4d483d8eab8e66e5c7c0f, type: 3}
+  _tilePrefab: {fileID: 4726681366420047622, guid: 12a09568e83b148198247ccfda996da0, type: 3}
   _game: {fileID: 736870270}
   _dragThreshold: 0.5
   _tileSwapper:
@@ -539,9 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f4f9698ea684a2084f1d3b411fe4c14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _size:
-    x: 8
-    y: 8
+  _size: {x: 8, y: 8}
 --- !u!4 &736870271
 Transform:
   m_ObjectHideFlags: 0
@@ -570,6 +569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _match3: {fileID: 736870269}
+  _autoGame: 0
 --- !u!1 &1283225898
 GameObject:
   m_ObjectHideFlags: 0

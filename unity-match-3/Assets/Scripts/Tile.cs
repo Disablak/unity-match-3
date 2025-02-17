@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Pool;
 
 
 public class Tile : MonoBehaviour
@@ -7,13 +8,21 @@ public class Tile : MonoBehaviour
 	[SerializeField, Range(0f, 1f)]
 	private float disappearDuration = 0.25f;
 
-	private PrefabInstancePool<Tile> _pool;
+	[SerializeField] private Sprite[] sprTiles;
+	[SerializeField] private SpriteRenderer sprRenderer;
+
+	private IObjectPool<Tile> _pool;
 	private float _disappearProgress;
 	private FallingState _fallingState;
 
-	public Tile Spawn(Vector3 pos)
+	public Tile Spawn(Vector3 pos, TileState state)
 	{
-		Tile instance = _pool.GetInstance(this);
+		_pool ??= new ObjectPool<Tile>(() => Instantiate(this),
+			tile => tile.gameObject.SetActive(true),
+			tile => tile.gameObject.SetActive(false));
+
+		Tile instance = _pool.Get();
+		instance.sprRenderer.sprite = sprTiles[(int)state - 1];
 		instance._pool = _pool;
 		instance.transform.localPosition = pos;
 		instance.transform.localScale = Vector3.one;
@@ -32,7 +41,7 @@ public class Tile : MonoBehaviour
 
 	public void Despawn()
 	{
-		_pool.Recycle(this);
+		_pool.Release(this);
 	}
 
 	public float Fall(float toY, float speed)

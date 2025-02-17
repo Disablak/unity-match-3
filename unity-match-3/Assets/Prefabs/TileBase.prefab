@@ -132,3 +132,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47a66a84a0a454888f0a81e850e7f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disappearDuration: 0.25
+  sprTiles:
+  - {fileID: 21300000, guid: 41b98bc57895a466d8dd0b1a0dd12fcb, type: 3}
+  - {fileID: 21300000, guid: 88215498a21bb4e59a6bd9fb1cb5a2aa, type: 3}
+  - {fileID: 21300000, guid: e5b4963fd820a4c0c9c845bbada807e5, type: 3}
+  - {fileID: 21300000, guid: 7443f4af7c11b45aebad4e23025504e3, type: 3}
+  - {fileID: 21300000, guid: fe6c5bd554a4546b8875c9b086ee90f8, type: 3}
+  - {fileID: 21300000, guid: b7a73909e2c1846308a977ce0d2bb34c, type: 3}
+  - {fileID: 21300000, guid: 1e978edcef3ea431f87c42069d7cdbd8, type: 3}
+  sprRenderer: {fileID: 3144988470919435560}

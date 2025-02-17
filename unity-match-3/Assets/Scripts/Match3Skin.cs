@@ -6,7 +6,7 @@ using static Unity.Mathematics.math;
 
 public class Match3Skin : MonoBehaviour
 {
-	[SerializeField] private Tile[] _tilePrefabs;
+	[SerializeField] private Tile _tilePrefab;
 	[SerializeField] private Match3Game _game;
 	[SerializeField] private float _dragThreshold = 0.5f;
 	[SerializeField] private TileSwapper _tileSwapper;
@@ -96,7 +96,7 @@ public class Match3Skin : MonoBehaviour
 
 	private Tile SpawnTile(TileState tileState, int x, int y)
 	{
-		return _tilePrefabs[(int)tileState - 1].Spawn(new Vector3(x + _tileOffset.x, y + _tileOffset.y));
+		return _tilePrefab.Spawn(new Vector3(x + _tileOffset.x, y + _tileOffset.y), tileState);
 	}
 
 	public bool EvalueteDrag(Vector3 start, Vector3 end)

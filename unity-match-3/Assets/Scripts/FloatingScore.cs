@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Pool;
 
 
 public class FloatingScore : MonoBehaviour
@@ -15,13 +16,16 @@ public class FloatingScore : MonoBehaviour
 
 
 	private float _age;
-	private PrefabInstancePool<FloatingScore> _pool;
-
+	private IObjectPool<FloatingScore> _pool;
 
 
 	public void Show(Vector3 pos, int value)
 	{
-		FloatingScore instance = _pool.GetInstance(this);
+		_pool ??= new ObjectPool<FloatingScore>(() => Instantiate(this),
+			fs => fs.gameObject.SetActive(true),
+			fs => fs.gameObject.SetActive(false));
+
+		FloatingScore instance = _pool.Get();
 		instance._pool = _pool;
 		instance.displayText.SetText("{0}", value);
 		instance.transform.localPosition = pos;
@@ -33,7 +37,7 @@ public class FloatingScore : MonoBehaviour
 		_age += Time.deltaTime;
 		if (_age >= displayDuration)
 		{
-			_pool.Recycle(this);
+			_pool.Release(this);
 		}else
 		{
 			Vector3 p = transform.localPosition;
