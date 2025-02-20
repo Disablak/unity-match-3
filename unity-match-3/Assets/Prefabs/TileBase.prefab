@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4217973220526594712}
@@ -134,11 +134,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disappearDuration: 0.25
   sprTiles:
-  - {fileID: 21300000, guid: 41b98bc57895a466d8dd0b1a0dd12fcb, type: 3}
-  - {fileID: 21300000, guid: 88215498a21bb4e59a6bd9fb1cb5a2aa, type: 3}
-  - {fileID: 21300000, guid: e5b4963fd820a4c0c9c845bbada807e5, type: 3}
-  - {fileID: 21300000, guid: 7443f4af7c11b45aebad4e23025504e3, type: 3}
-  - {fileID: 21300000, guid: fe6c5bd554a4546b8875c9b086ee90f8, type: 3}
-  - {fileID: 21300000, guid: b7a73909e2c1846308a977ce0d2bb34c, type: 3}
-  - {fileID: 21300000, guid: 1e978edcef3ea431f87c42069d7cdbd8, type: 3}
+  - {fileID: 5088316998373936774, guid: 0379e9b5b80ef436997f94ced77c42d8, type: 3}
+  - {fileID: -855298285791758126, guid: de22d4ad9875d470084c7eb3f72c767d, type: 3}
+  - {fileID: 6937817954938267909, guid: c2cd2c9151b4442fab8cccc648ec8578, type: 3}
+  - {fileID: -6470460504253458178, guid: 3d87d8eb97af64369a35dc1fae06487b, type: 3}
+  - {fileID: -4178046375966092550, guid: 88b99ef29bc074688a482d2a6f24a744, type: 3}
+  - {fileID: 4130640169021434097, guid: 100102912a1df4687ae45f580f66d870, type: 3}
+  - {fileID: 3465286685962602723, guid: d078cd55120374964b2e029f1cc4619f, type: 3}
+  - {fileID: 7028616704906629411, guid: 1d061a23f5ab74e189944a9bd399ff5e, type: 3}
   sprRenderer: {fileID: 3144988470919435560}

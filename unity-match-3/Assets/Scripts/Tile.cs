@@ -14,7 +14,7 @@ public class Tile : MonoBehaviour
 	private IObjectPool<Tile> _pool;
 	private float _disappearProgress;
 	private FallingState _fallingState;
-	private readonly Vector3 DEFAULT_LOCAL_SCALE = Vector3.one * 0.4f;
+	private readonly Vector3 DEFAULT_LOCAL_SCALE = Vector3.one * 0.35f;
 
 	public Tile Spawn(Vector3 pos, TileState state)
 	{
