@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -35,8 +36,8 @@ public class Tile : MonoBehaviour
 
 	public float Disappear()
 	{
-		_disappearProgress = 0f;
 		enabled = true;
+		sprRenderer.transform.DOScale(Vector3.zero, disappearDuration).OnComplete(Despawn);
 		return disappearDuration;
 	}
 
@@ -47,45 +48,14 @@ public class Tile : MonoBehaviour
 
 	public float Fall(float toY, float speed)
 	{
-		_fallingState.fromY = transform.localPosition.y;
-		_fallingState.toY = toY;
-		_fallingState.duration = (_fallingState.fromY - toY) / speed;
-		_fallingState.progress = 0f;
 		enabled = true;
-		return _fallingState.duration;
+
+		float duration = (transform.localPosition.y - toY) * speed;
+
+		transform.DOMoveY(toY, duration).SetEase(Ease.OutBounce);
+
+		return duration;
 	}
-
-	private void Update()
-	{
-		if (_disappearProgress >= 0f)
-		{
-			_disappearProgress += Time.deltaTime;
-			if (_disappearProgress >= disappearDuration)
-			{
-				Despawn();
-				return;
-			}
-			sprRenderer.transform.localScale = DEFAULT_LOCAL_SCALE * (1f - _disappearProgress / disappearDuration);
-		}
-
-		if (_fallingState.progress >= 0f)
-		{
-			Vector3 position = transform.localPosition;
-			_fallingState.progress += Time.deltaTime;
-			if (_fallingState.progress >= _fallingState.duration)
-			{
-				_fallingState.progress = -1f;
-				position.y = _fallingState.toY;
-				enabled = _disappearProgress >= 0f;
-			}else
-			{
-				position.y = Mathf.Lerp(_fallingState.fromY, _fallingState.toY, _fallingState.progress / _fallingState.duration);
-			}
-
-			transform.localPosition = position;
-		}
-	}
-
 
 	[System.Serializable]
 	private struct FallingState
