@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 736870272}
   - component: {fileID: 736870270}
   - component: {fileID: 736870269}
+  - component: {fileID: 736870273}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -519,7 +520,8 @@ MonoBehaviour:
   _textTotalScore: {fileID: 1965252555}
   _textGameOver: {fileID: 645354294}
   _floatingScorePrefab: {fileID: 2469987637881745541, guid: ff10c066512e549eaad3aa44e53d615b, type: 3}
-  _dropSpeed: 8
+  _shakeScreen: {fileID: 736870273}
+  _dropSpeed: 0.2
   _newDropOffset: 2
 --- !u!114 &736870270
 MonoBehaviour:
@@ -562,7 +564,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _match3: {fileID: 736870269}
-  _autoGame: 0
+  _autoGame: 1
+--- !u!114 &736870273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736870268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d475ca00d1a471f892c47efbd262cd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainCamera: {fileID: 519420031}
+  duration: 0.5
+  strength: 0.5
+  vibrato: 10
+  randomness: 90
 --- !u!1 &1283225898
 GameObject:
   m_ObjectHideFlags: 0

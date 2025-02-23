@@ -13,9 +13,7 @@ public class Tile : MonoBehaviour
 	[SerializeField] private SpriteRenderer sprRenderer;
 
 	private IObjectPool<Tile> _pool;
-	private float _disappearProgress;
-	private FallingState _fallingState;
-	private readonly Vector3 DEFAULT_LOCAL_SCALE = Vector3.one * 0.35f;
+
 
 	public Tile Spawn(Vector3 pos, TileState state)
 	{
@@ -27,9 +25,6 @@ public class Tile : MonoBehaviour
 		instance.sprRenderer.sprite = sprTiles[(int)state - 1];
 		instance._pool = _pool;
 		instance.transform.localPosition = pos;
-		instance.sprRenderer.transform.localScale = DEFAULT_LOCAL_SCALE;
-		instance._disappearProgress = -1f;
-		instance._fallingState.progress = -1f;
 		instance.enabled = false;
 		return instance;
 	}
@@ -37,7 +32,12 @@ public class Tile : MonoBehaviour
 	public float Disappear()
 	{
 		enabled = true;
-		sprRenderer.transform.DOScale(Vector3.zero, disappearDuration).OnComplete(Despawn);
+		Vector3 startScale = sprRenderer.transform.localScale;
+		sprRenderer.transform.DOScale(Vector3.zero, disappearDuration).OnComplete(() =>
+		{
+			sprRenderer.transform.localScale = startScale;
+			Despawn();
+		});
 		return disappearDuration;
 	}
 
