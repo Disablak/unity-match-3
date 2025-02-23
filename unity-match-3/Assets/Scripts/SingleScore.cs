@@ -6,4 +6,5 @@ public struct SingleScore
 {
 	public float2 position;
 	public int value;
+	public int length;
 }

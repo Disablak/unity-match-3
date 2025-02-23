@@ -78,7 +78,8 @@ public class Match3Game : MonoBehaviour
 			var score = new SingleScore()
 			{
 				position = match.coordinates + (float2)step * (match.length - 1) * 0.5f,
-				value = match.length * _scoreMultiplayer++
+				value = match.length * _scoreMultiplayer++,
+				length = match.length
 			};
 			Scores.Add(score);
 			TotalScore += score.value;

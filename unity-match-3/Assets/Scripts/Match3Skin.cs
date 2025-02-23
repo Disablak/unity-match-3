@@ -14,6 +14,7 @@ public class Match3Skin : MonoBehaviour
 	[SerializeField] private TMP_Text _textTotalScore;
 	[SerializeField] private TMP_Text _textGameOver;
 	[SerializeField] private FloatingScore _floatingScorePrefab;
+	[SerializeField] private ShakeScreen _shakeScreen;
 
 	[SerializeField, Range(0.1f, 20f)]
 	private float _dropSpeed = 8f;
@@ -177,6 +178,11 @@ public class Match3Skin : MonoBehaviour
 			SingleScore score = _game.Scores[i];
 			_floatingScorePrefab.Show(new Vector3(score.position.x + _tileOffset.x, score.position.y + _tileOffset.y, _floatingScoreZ), score.value);
 			_floatingScoreZ = _floatingScoreZ <= -0.02f ? 0f : _floatingScoreZ - 0.001f;
+
+			if (score.length > 3)
+			{
+				_shakeScreen.Shake(score.value * 0.1f);
+			}
 		}
 	}
 
