@@ -181,7 +181,7 @@ public class Match3Skin : MonoBehaviour
 
 			if (score.length > 3)
 			{
-				_shakeScreen.Shake(score.value * 0.1f);
+				_shakeScreen.Shake(score.value);
 			}
 		}
 	}

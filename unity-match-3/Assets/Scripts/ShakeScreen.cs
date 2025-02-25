@@ -10,8 +10,8 @@ public class ShakeScreen : MonoBehaviour
 	[SerializeField] private int vibrato = 10; // How many shakes happen in the duration
 	[SerializeField] private float randomness = 90f; // Randomness of shake direction
 
-	public void Shake(float strength)
+	public void Shake(int lvl)
 	{
-		_mainCamera.transform.DOShakePosition(duration, strength, vibrato, randomness);
+		_mainCamera.transform.DOShakePosition(duration, lvl * strength, vibrato, randomness);
 	}
 }
