@@ -15,7 +15,7 @@ public class Tile : MonoBehaviour
 	private IObjectPool<Tile> _pool;
 
 
-	public Tile Spawn(Vector3 pos, TileState state)
+	public Tile Spawn(Vector3 pos, Transform parent, TileState state)
 	{
 		_pool ??= new ObjectPool<Tile>(() => Instantiate(this),
 			tile => tile.gameObject.SetActive(true),
@@ -25,6 +25,7 @@ public class Tile : MonoBehaviour
 		instance.sprRenderer.sprite = sprTiles[(int)state - 1];
 		instance._pool = _pool;
 		instance.transform.localPosition = pos;
+		instance.transform.SetParent(parent);
 		instance.enabled = false;
 		return instance;
 	}

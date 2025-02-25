@@ -98,7 +98,7 @@ public class Match3Skin : MonoBehaviour
 
 	private Tile SpawnTile(TileState tileState, int x, int y)
 	{
-		return _tilePrefab.Spawn(new Vector3(x + _tileOffset.x, y + _tileOffset.y), tileState);
+		return _tilePrefab.Spawn(new Vector3(x + _tileOffset.x, y + _tileOffset.y), transform, tileState);
 	}
 
 	public bool EvaluateDrag(Vector3 start, Vector3 end)
