@@ -1,22 +1,26 @@
 using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 
 public class FloatingScore : MonoBehaviour
 {
 	[SerializeField] private TextMeshPro displayText;
+	[SerializeField] private float flyDistance = 3f;
+	[SerializeField] private float flyHeight = 2f;
+	[SerializeField] private AnimationCurve curveFly;
+	[SerializeField] private Vector2Int minMaxAngle;
 
-	[SerializeField, Range(0.1f, 1f)]
+	[SerializeField]
 	private float displayDuration = 0.5f;
-
-	[SerializeField, Range(0f, 4f)]
-	private float riseSpeed = 2f;
-
 
 	private float _age;
 	private IObjectPool<FloatingScore> _pool;
+	private Vector2 _startPos;
+	private Vector2 _dirFly;
 
 
 	public void Show(Vector3 pos, int value)
@@ -29,20 +33,21 @@ public class FloatingScore : MonoBehaviour
 		instance._pool = _pool;
 		instance.displayText.SetText("{0}", value);
 		instance.transform.localPosition = pos + new Vector3(0.5f, 0.5f);
-		instance._age = 0f;
+		instance.transform.DOMove(new Vector3(instance.transform.localPosition.x, instance.transform.localPosition.y + flyDistance, -0.1f), displayDuration).SetEase(Ease.OutCubic).OnComplete(() => _pool.Release(instance));
 	}
 
-	public void Update()
+	private Vector2 GetRandomDirection()
 	{
-		_age += Time.deltaTime;
-		if (_age >= displayDuration)
-		{
-			_pool.Release(this);
-		}else
-		{
-			Vector3 p = transform.localPosition;
-			p.y += riseSpeed * Time.deltaTime;
-			transform.localPosition = p;
-		}
+		int randomAngle = Random.Range(minMaxAngle.x, minMaxAngle.y);
+		return new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad));
+	}
+
+	public static Vector2 Parabola(Vector2 start, Vector2 end, float height, float t)
+	{
+		Func<float, float> f = x => -4 * height * x * x + 4 * height * x;
+
+		var mid = Vector2.Lerp(start, end, t);
+
+		return new Vector2(mid.x, f(t) + Mathf.Lerp(start.y, end.y, t));
 	}
 }

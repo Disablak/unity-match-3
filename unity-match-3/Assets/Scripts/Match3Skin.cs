@@ -176,7 +176,7 @@ public class Match3Skin : MonoBehaviour
 		for (int i = 0; i < _game.Scores.Count; i++)
 		{
 			SingleScore score = _game.Scores[i];
-			_floatingScorePrefab.Show(new Vector3(score.position.x + _tileOffset.x, score.position.y + _tileOffset.y, _floatingScoreZ), score.value);
+			_floatingScorePrefab.Show(new Vector3(score.position.x + _tileOffset.x, score.position.y + _tileOffset.y), score.value);
 			_floatingScoreZ = _floatingScoreZ <= -0.02f ? 0f : _floatingScoreZ - 0.001f;
 
 			if (score.length > 3)

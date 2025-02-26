@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9fd5e9621884e45f1963e5a6ef7332ea
+guid: c5ecdd69ba35b46b58dfe5d0211c77f0
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - HVD Comic Serif Pro
+  - Share Tech Mono
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
